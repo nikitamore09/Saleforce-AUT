@@ -90,6 +90,7 @@ public class MyProfilePage extends BasePage {
 
 
     public void clickOnPostLink() {
+        driver.navigate().refresh();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20).getSeconds());
 

@@ -46,7 +46,6 @@ public class MyProfileTest extends BaseTest {
         myProfilePage.clickOnLastName();
         myProfilePage.clickOnSaveAll();
         myProfilePage.switchToDefaultContent();
-
         myProfilePage.clickOnPostLink();
 //      myProfilePage.switchToIframe("cke_43_contents");
         myProfilePage.switchToPostLinkIframe();
