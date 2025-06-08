@@ -1,11 +1,11 @@
 package com.testng.pages;
 
 import com.training.base.BasePage;
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -15,6 +15,11 @@ public class MyProfilePage extends BasePage {
     public MyProfilePage(WebDriver driver) {
         super(driver);
     }
+
+    Actions act = new Actions(driver);
+
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+
 
     //click My Profile Option from userMenu
 
@@ -54,8 +59,31 @@ public class MyProfilePage extends BasePage {
     @FindBy(id = "uploadLink")
     WebElement addLink;
 
-    @FindBy(xpath = "//span[@class='publisherattachtext']")
+    @FindBy(xpath = "//span[normalize-space()='File']")
     WebElement fileLink;
+
+    @FindBy(xpath = "//a[@id='chatterUploadFileAction']")
+    WebElement uploadFileFromYourComputerLink;
+
+    @FindBy(xpath = "//form[@id='chatterFileForm']//input[@type='file']")
+    WebElement chooseFileButton;
+
+    @FindBy(xpath = "//*[@id=\"j_id0:uploadFileForm:uploadBtn\"]")
+    WebElement saveButtonOfUploadFile;
+
+    @FindBy(xpath = "//input[@class='fileInput']")
+    WebElement photoChooseFileButton;
+
+    @FindBy(xpath = "//*[@id=\"j_id0:outer\"]/div[1]/div/div/div/div[5]")
+    WebElement cropPhotoBox;
+
+    @FindBy(id = "j_id0:j_id7:save")
+    WebElement saveButtonAfterCropPhoto;
+
+
+    public WebElement getAboutTab() {
+        return aboutTab;
+    }
 
     //select my profile option
     public void selectMyProfileOption() {
@@ -103,7 +131,7 @@ public class MyProfilePage extends BasePage {
     }
 
 
-    public void switchToPostLinkIframe(){
+    public void switchToPostLinkIframe() {
         waitForElement(postLinkIframe, 25);
         driver.switchTo().frame(postLinkIframe);
     }
@@ -122,16 +150,57 @@ public class MyProfilePage extends BasePage {
     }
 
     public void clickOnFileLink() {
+        driver.navigate().refresh();
+        waitForElement(fileLink, 10);
         fileLink.click();
     }
 
+    public void clickOnUploadFileFromComputer() {
+        uploadFileFromYourComputerLink.click();
+    }
+
+    public void clickOnChooseFile() {
+        waitForElement(chooseFileButton, 10);
+        chooseFileButton.sendKeys("/Users/nikita/DemoUploadFile.txt");
+
+        //act.moveToElement(chooseFileButton).click().build().perform();
+        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20).getSeconds());
+    }
+
     public void clickOnAddPhotoLink() {
-        addLink.click();
+        driver.navigate().refresh();
+        waitForElement(addLink, 10);
+        //addLink.sendKeys("/Users/nikita/Downloads/8E94F2AC-A4B0-4FF4-85B8-B3AE9CBAE7CC_1_105_c.jpeg");
+        act.moveToElement(addLink).click().build().perform();
+
+
     }
 
 
-    //Click on edit profile button to edit contact info
-    //click on about tab
+    public void uploadPhotoFromSystem() {
+        waitForElement(photoChooseFileButton, 10);
+        //photoChooseFileButton.sendKeys("/Users/nikita/Downloads/8E94F2AC-A4B0-4FF4-85B8-B3AE9CBAE7CC_1_105_c.jpeg");
+        //act.moveToElement(photoChooseFileButton).click().build().perform();
+        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5).getSeconds());
+        photoChooseFileButton.sendKeys("/Users/nikita/Downloads/8E94F2AC-A4B0-4FF4-85B8-B3AE9CBAE7CC_1_105_c.jpeg");
+
+    }
+
+
+    public void clickOnSaveButtonRelatedToPhotoUpload() {
+        waitForElement(saveButtonOfUploadFile, 10);
+        //saveButtonOfUploadFile.click();
+        js.executeScript("arguments[0].click();", saveButtonOfUploadFile);
+    }
+
+    public void cropThePicture()
+    {
+        waitForElement(cropPhotoBox,20);
+        act.dragAndDropBy(cropPhotoBox, 100, 100).perform();
+        saveButtonAfterCropPhoto.click();
+
+    }
+
 
 
 }

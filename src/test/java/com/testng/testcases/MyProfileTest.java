@@ -26,14 +26,13 @@ public class MyProfileTest extends BaseTest {
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
         userMenuPage = new UserMenuPage(driver);
-        myProfilePage =new MyProfilePage(driver);
+        myProfilePage = new MyProfilePage(driver);
         screenshot = new ScreenShot();
     }
 
 
     @Test
-    public void selectMyProfileOptionFromUserMenuDropDown()
-    {
+    public void selectMyProfileOptionFromUserMenuDropDown() {
         loginPage.enterintoEmail();
         loginPage.enterintoPassword("Cme@2025");
         Log.info("Username entered successfully");
@@ -47,12 +46,22 @@ public class MyProfileTest extends BaseTest {
         myProfilePage.clickOnSaveAll();
         myProfilePage.switchToDefaultContent();
         myProfilePage.clickOnPostLink();
-//      myProfilePage.switchToIframe("cke_43_contents");
         myProfilePage.switchToPostLinkIframe();
         myProfilePage.enterTextInsideIFrameBody();
         myProfilePage.switchToDefaultContent();
         myProfilePage.clickOnShareButton();
-        //myProfilePage.clickOnFileLink();
+        myProfilePage.clickOnFileLink();
+        myProfilePage.clickOnUploadFileFromComputer();
+        myProfilePage.clickOnChooseFile();
+        myProfilePage.clickOnShareButton();
+        myProfilePage.clickOnAddPhotoLink();
+        myProfilePage.switchToIframe("uploadPhotoContentId");
+        myProfilePage.uploadPhotoFromSystem();
+        myProfilePage.clickOnSaveButtonRelatedToPhotoUpload();
+        myProfilePage.cropThePicture();
+
+        //myProfilePage.switchToDefaultContent();
+
 
     }
 }
